@@ -1,4 +1,4 @@
-import Vector2 from '../src/UnityVector2'
+import Vector2 from '../src/unityvector2'
 import {expect} from 'chai'
 
 describe('Vector2', () => {
