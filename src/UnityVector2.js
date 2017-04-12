@@ -7,47 +7,47 @@ export default class Vector2 {
 	static get left() { return new Vector2(-1, 0) }
 	static get right() { return new Vector2(1, 0) }
 
-	static lerp(a, b, t) {
+	static Lerp(a, b, t) {
 		t = Math.max(Math.min(t, 1), 0)
 		return new Vector2(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t)
 	}
 
-	static lerpUnclamped(a, b, t) {
+	static LerpUnclamped(a, b, t) {
 		return new Vector2(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t)
 	}
 
-	static moveTowards(current, target, maxDistanceDelta) {
-		const a = target.minus(current)
+	static MoveTowards(current, target, maxDistanceDelta) {
+		const a = target.Subtract(current)
 		const magnitude = a.magnitude
 		if (magnitude <= maxDistanceDelta || magnitude == 0)
 			return target
 		else
-			return current.plus(a).over(magnitude*maxDistanceDelta)
+			return current.Add(a).Divide(magnitude*maxDistanceDelta)
 	}
 
-	static scale(a, b) {
+	static Scale(a, b) {
 		return new Vector2(a.x*b.x, a.y*b.y)
 	}
 
-	static reflect(inDirection, inNormal) {
-		return inNormal.times((-2 * Vector2.dot(inNormal, inDirection))).plus(inDirection)
+	static Reflect(inDirection, inNormal) {
+		return inNormal.Multiply((-2 * Vector2.Dot(inNormal, inDirection))).Add(inDirection)
 	}
 
-	static dot(lhs, rhs) {
+	static Dot(lhs, rhs) {
 		return lhs.x * rhs.x + lhs.y * rhs.y
 	}
 
-	static angle(from, to) {
-		return Math.acos(Math.max(Math.min(Vector2.dot(from.normalized, to.normalized), 1), -1)) * 57.29578
+	static Angle(from, to) {
+		return Math.acos(Math.max(Math.min(Vector2.Dot(from.normalized, to.normalized), 1), -1)) * 57.29578
 	}
 
-	static distance(a, b) {
-		return a.minus(b).magnitude
+	static Distance(a, b) {
+		return a.Subtract(b).magnitude
 	}
 
-	static clampMagnitude(vector, maxLength) {
+	static ClampMagnitude(vector, maxLength) {
 		if (vector.sqrMagnitude > maxLength**2)
-			return vector.normalized.times(maxLength)
+			return vector.normalized.Multiply(maxLength)
 		else
 			return vector
 	}
@@ -57,6 +57,16 @@ export default class Vector2 {
 		this.y = y
 	}
 
+	get 0() { return this.x }
+	set 0(v) { this.x = v }
+	get 1() { return this.y }
+	set 1(v) { this.y = v }
+	
+	Set(newX, newY) {
+		this.x = newX
+		this.y = newY
+	}
+
 	get normalized() {
 		const magnitude = this.magnitude
 		if (magnitude > 1E-05) {
@@ -64,8 +74,6 @@ export default class Vector2 {
 		} else {
 			return new Vector2(0, 0)
 		}
-
-		return result
 	}
 
 	get magnitude() {
@@ -76,31 +84,47 @@ export default class Vector2 {
 		return this.x**2 + this.y**2
 	}
 
+	Scale(scale) {
+		this.x *= scale.x
+		this.y *= scale.y
+	}
+
+	Normalize() {
+		const magnitude = this.magnitude
+		if (magnitude > 1E-05) {
+			this.x /= magnitude
+			this.y /= magnitude
+		} else {
+			this.x = 0
+			this.y = 0
+		}
+	}
+
 	toString() {
 		return `(${this.x}, ${this.y})`
 	}
 
-	equals(other) {
+	Equals(other) {
 		if (!(other instanceof Vector2)) {
 			return false
 		} else {
-			return (other.minus(this)).sqrMagnitude < Vector2.kEpsilon
+			return (other.Subtract(this)).sqrMagnitude < Vector2.kEpsilon
 		}
 	}
 
-	plus(other) {
+	Add(other) {
 		return new Vector2(this.x+other.x, this.y+other.y)
 	}
 
-	minus(other) {
+	Subtract(other) {
 		return new Vector2(this.x-other.x, this.y-other.y)
 	}
 
-	times(number) {
+	Multiply(number) {
 		return new Vector2(this.x*number, this.y*number)
 	}
 
-	over(number) {
+	Divide(number) {
 		return new Vector2(this.x/number, this.y/number)
 	}	
 }
