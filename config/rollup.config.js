@@ -5,12 +5,12 @@ import memory from 'rollup-plugin-memory';
 export default {
 	useStrict: true,
 	format: 'iife',
-	entry: 'src/uvector2.js',
+	entry: 'src/unityvector2.js',
 	plugins: [
 		memory({
-			path: 'src/uvector2.js',
+			path: 'src/unityvector2.js',
 			contents: `
-				import Vector2 from './uvector2';
+				import Vector2 from './unityvector2';
 				if (typeof module!='undefined') module.exports = Vector2;
 				else self.Vector2 = Vector2;
 			`
