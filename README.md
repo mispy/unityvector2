@@ -4,13 +4,15 @@ An unofficial implementation of the [Unity Vector2](https://docs.unity3d.com/Scr
 
 ## Installation
 
-```
+```js
 npm install --save unityvector2
 ```
 
 ## Usage
 
-```
+This supports [most of the Unity methods](https://github.com/mispy/unityvector2/blob/master/src/unityvector2.js). Since JS doesn't yet support operator overloading, the operators are functions instead.
+
+```js
 import Vector2 from 'unityvector2'
 
 let a = new Vector2(0, 1)
